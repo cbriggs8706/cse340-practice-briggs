@@ -2,7 +2,8 @@
 <main>
     <h1>Course Catalog</h1>
     <p>Browse our available courses and click on any course to see detailed information including available sections and instructors.</p>
-
+    <a href="/catalog/departments" class="theme-button">View Courses by Department</a>
+    <%- include('partials/catalog-filters') %>
     <div class="course-list">
         <% Object.values(courses).forEach(course => { %>
             <div class="course-card">

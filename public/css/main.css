@@ -74,17 +74,42 @@ body {
 	}
 	&.blue-theme {
 		background-color: #e3f2fd;
+		--button-color: #174a6e;
 	}
 	&.green-theme {
 		background-color: #e8f5e8;
+		--button-color: #256336;
 	}
 	&.red-theme {
 		background-color: #ffebee;
+		--button-color: #a52a35;
 	}
 	&.purple-theme {
 		background-color: #f3e5f5;
+		--button-color: #71368a;
 	}
 	&.orange-theme {
 		background-color: #fff3e0;
+		--button-color: #98430b;
+	}
+	/* Had ChatGPT write this color css for me */
+	.theme-button {
+		display: inline-block;
+		margin-bottom: 1.5rem;
+		padding: 0.75rem 1.25rem;
+		background-color: var(--button-color, #174a6e);
+		color: white;
+		border-radius: 8px;
+		font-weight: 600;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+
+		&:focus-visible {
+			outline: 3px solid var(--button-color, #174a6e);
+			outline-offset: 3px;
+		}
 	}
 }

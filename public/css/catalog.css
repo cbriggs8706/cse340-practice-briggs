@@ -152,3 +152,27 @@
 		}
 	}
 }
+
+.catalog-filters {
+	.sections-header {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 1rem;
+
+		.sort-options {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 0.5rem;
+
+			span {
+				flex-basis: 100%;
+				font-weight: bold;
+			}
+
+			a {
+				white-space: nowrap;
+			}
+		}
+	}
+}
