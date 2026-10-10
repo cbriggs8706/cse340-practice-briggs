@@ -72,4 +72,19 @@ body {
 			padding-left: 25px;
 		}
 	}
+	&.blue-theme {
+		background-color: #e3f2fd;
+	}
+	&.green-theme {
+		background-color: #e8f5e8;
+	}
+	&.red-theme {
+		background-color: #ffebee;
+	}
+	&.purple-theme {
+		background-color: #f3e5f5;
+	}
+	&.orange-theme {
+		background-color: #fff3e0;
+	}
 }
