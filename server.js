@@ -1,64 +1,77 @@
-// Import express using ESM syntax
 import express from 'express'
-import { fileURLToPath } from 'url'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
-const name = process.env.NAME
-// Define the port number the server will listen on
-const NODE_ENV = process.env.NODE_ENV || 'production'
-const PORT = process.env.PORT || 3000
+// Import MVC components
+import routes from './src/controllers/routes.js'
+import { addLocalVariables } from './src/middleware/global.js'
+import { notFound, serverError } from './src/controllers/errors.js'
+
+/**
+ * Server configuration
+ */
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production'
+const PORT = process.env.PORT || 3000
 
-// Create an instance of an Express application
+/**
+ * Setup Express Server
+ */
 const app = express()
 
 /**
- * Configure Express middleware
+ * Configure Express
  */
-
-// Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')))
-
-// Set EJS as the templating engine
 app.set('view engine', 'ejs')
-
-// Tell Express where to find your templates
 app.set('views', path.join(__dirname, 'src/views'))
 
-// Define a route handler for the root URL ('/')
+/**
+ * Global Middleware
+ */
+app.use(addLocalVariables)
 
 /**
  * Routes
  */
-app.get('/', (req, res) => {
-	const title = 'Welcome Home'
-	// res.sendFile(path.join(__dirname, 'src/views/home.html'))
-	res.render('home', { title })
-})
+app.use('/', routes)
 
-app.get('/about', (req, res) => {
-	const title = 'About Me'
-	// res.sendFile(path.join(__dirname, 'src/views/about.html'))
-	res.render('about', { title })
-})
+/**
+ * Error Handling
+ */
 
-app.get('/products', (req, res) => {
-	const title = 'Our Products'
-	// res.sendFile(path.join(__dirname, 'src/views/products.html'))
-	res.render('products', { title })
-})
+// 404 handler
+app.use(notFound)
 
-app.get('/student', (req, res) => {
-	const name = 'Cameron Briggs'
-	const id = '123456'
-	const email = 'bri06021@byui.edu'
-	const address = 'PO Box 242, Malta, ID 83342'
-	const title = 'Student Information'
-	res.render('student', { name, id, email, address, title })
-})
+// Global error handler
+app.use(serverError)
 
-// Start the server and listen on the specified port
+/**
+ * Start WebSocket Server in Development Mode; used for live reloading
+ */
+if (NODE_ENV.includes('dev')) {
+	const ws = await import('ws')
+
+	try {
+		const wsPort = parseInt(PORT) + 1
+		const wsServer = new ws.WebSocketServer({ port: wsPort })
+
+		wsServer.on('listening', () => {
+			console.log(`WebSocket server is running on port ${wsPort}`)
+		})
+
+		wsServer.on('error', (error) => {
+			console.error('WebSocket server error:', error)
+		})
+	} catch (error) {
+		console.error('Failed to start WebSocket server:', error)
+	}
+}
+
+/**
+ * Start Server
+ */
 app.listen(PORT, () => {
 	console.log(`Server is running on http://127.0.0.1:${PORT}`)
 })

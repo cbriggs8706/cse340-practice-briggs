@@ -1,0 +1,43 @@
+<!-- I had ChatGPT help me with this file for the ui of the filters in the extend exercise -->
+
+<div class="sections catalog-filters">
+	<div class="sections-header">
+		<div class="sort-options">
+			<span>Filter Credits: </span>
+			<a
+				href="?credits=all&amp;professor=<%= encodeURIComponent(queryParams.professor || 'all') %>"
+				class="<%= (queryParams.credits || 'all') === 'all' ? 'active' : '' %>"
+				>All</a
+			>
+
+			<a
+href="?credits=3&amp;professor=<%= encodeURIComponent(queryParams.professor || 'all') %>"				class="<%= queryParams.credits === '3' ? 'active' : '' %>"
+				>3</a
+			>
+			<a
+href="?credits=4&amp;professor=<%= encodeURIComponent(queryParams.professor || 'all') %>"				class="<%= queryParams.credits === '4' ? 'active' : '' %>"
+				>4</a
+			>
+      </div><div class="sort-options">
+			<span>Filter Professors: </span>
+      <% const professors = [
+  'Sister Anderson',
+  'Brother Davis',
+  'Sister Enkey',
+  'Brother Jack',
+  'Brother Keers',
+  'Sister Peterson',
+  'Sister Roberts',
+  'Brother Thompson',
+  'Brother Wilson'
+]; %>
+
+<% ['all', ...professors].forEach(professor => { %>
+  <a
+    href="?credits=<%= encodeURIComponent(queryParams.credits || 'all') %>&amp;professor=<%= encodeURIComponent(professor) %>"
+    class="<%= (queryParams.professor || 'all') === professor ? 'active' : '' %>"
+  ><%= professor === 'all' ? 'All' : professor %></a>
+<% }); %>
+		</div>
+	</div>
+</div>
