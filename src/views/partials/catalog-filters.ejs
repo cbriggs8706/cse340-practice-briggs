@@ -20,24 +20,17 @@ href="?credits=4&amp;professor=<%= encodeURIComponent(queryParams.professor || '
 			>
       </div><div class="sort-options">
 			<span>Filter Professors: </span>
-      <% const professors = [
-  'Sister Anderson',
-  'Brother Davis',
-  'Sister Enkey',
-  'Brother Jack',
-  'Brother Keers',
-  'Sister Peterson',
-  'Sister Roberts',
-  'Brother Thompson',
-  'Brother Wilson'
-]; %>
+      <a
+    href="?credits=<%= encodeURIComponent(queryParams.credits || 'all') %>&amp;professor=all"
+    class="<%= (queryParams.professor || 'all') === 'all' ? 'active' : '' %>"
+>All</a>
 
-<% ['all', ...professors].forEach(professor => { %>
-  <a
-    href="?credits=<%= encodeURIComponent(queryParams.credits || 'all') %>&amp;professor=<%= encodeURIComponent(professor) %>"
-    class="<%= (queryParams.professor || 'all') === professor ? 'active' : '' %>"
-  ><%= professor === 'all' ? 'All' : professor %></a>
-<% }); %>
+		<% professors.forEach(professor => { %>
+				<a
+						href="?credits=<%= encodeURIComponent(queryParams.credits || 'all') %>&amp;professor=<%= encodeURIComponent(professor.slug) %>"
+						class="<%= queryParams.professor === professor.slug ? 'active' : '' %>"
+				><%= professor.name %></a>
+		<% }); %>
 		</div>
 	</div>
 </div>
