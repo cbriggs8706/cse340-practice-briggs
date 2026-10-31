@@ -92,6 +92,13 @@ body {
 		background-color: #fff3e0;
 		--button-color: #98430b;
 	}
+	.greeting {
+		margin: 0 0 1rem;
+		font-size: 1.1rem;
+		font-weight: 600;
+		color: #174a6e;
+		text-align: center;
+	}
 	/* Had ChatGPT write this color css for me */
 	.theme-button {
 		display: inline-block;
